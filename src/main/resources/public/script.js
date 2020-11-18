@@ -26,6 +26,13 @@ const createEntry = (e) => {
     });
 };
 
+const deleteEntry = (id) => {
+    fetch(`${URL}/entries/${id}`, {
+        method: 'DELETE'
+    }).then(indexEntries);
+
+}
+
 const indexEntries = () => {
     fetch(`${URL}/entries`, {
         method: 'GET'
@@ -40,7 +47,7 @@ const indexEntries = () => {
 
 const createCell = (text) => {
     const cell = document.createElement('td');
-    cell.innerText = text;
+    cell.innerHTML = text;
     return cell;
 };
 
@@ -52,6 +59,7 @@ const renderEntries = () => {
         row.appendChild(createCell(entry.id));
         row.appendChild(createCell(new Date(entry.checkIn).toLocaleString()));
         row.appendChild(createCell(new Date(entry.checkOut).toLocaleString()));
+        row.appendChild(createCell('<button type="submit" onclick="deleteEntry('+entry.id+')">Delete</button>'));
         display.appendChild(row);
     });
 };
