@@ -30,8 +30,7 @@ const deleteEntry = (id) => {
     fetch(`${URL}/entries/${id}`, {
         method: 'DELETE'
     }).then(indexEntries);
-
-}
+};
 
 const indexEntries = () => {
     fetch(`${URL}/entries`, {
