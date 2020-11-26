@@ -17,7 +17,8 @@ const createEntry = (e) => {
     fetch(`${URL}/entries`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            //Authorization: localStorage.getItem("JWT")
         },
         body: JSON.stringify(entry)
     }).then((result) => {
@@ -37,7 +38,8 @@ const createCategory = (e) => {
     fetch(`${URL}/categories`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            //Authorization: localStorage.getItem("JWT")
         },
         body: JSON.stringify(category)
     }).then((result) => {
@@ -50,19 +52,28 @@ const createCategory = (e) => {
 
 const deleteEntry = (id) => {
     fetch(`${URL}/entries/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+            Authorization: localStorage.getItem("JWT")
+        }
     }).then(indexEntries);
 };
 
 const deleteCategory = (id) => {
     fetch(`${URL}/categories/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+            //Authorization: localStorage.getItem("JWT")
+        }
     }).then(indexCategories);
 }
 
 const indexEntries = () => {
     fetch(`${URL}/entries`, {
-        method: 'GET'
+        method: 'GET',
+        headers: {
+            //Authorization: localStorage.getItem("JWT")
+        }
     }).then((result) => {
         result.json().then((result) => {
             entries = result;
@@ -75,7 +86,10 @@ const indexEntries = () => {
 
 const indexCategories = () => {
     fetch(`${URL}/categories`, {
-        method: 'GET'
+        method: 'GET',
+        headers: {
+            //Authorization: localStorage.getItem("JWT")
+        }
     }).then((resultCat) => {
         resultCat.json().then((resultCat) => {
             categories = resultCat;
@@ -150,3 +164,108 @@ document.addEventListener('DOMContentLoaded', function(){
     renderCategoriesDropdown();
     renderCategories();
 });
+
+
+
+document.addEventListener('DOMContentLoaded', function(){
+    const loginForm = document.querySelector('#loginForm');
+    loginForm.addEventListener('submit', loginUser);
+});
+
+const loginUser = (e) => {
+    e.preventDefault();
+    const fromData= new FormData(e.target);
+    const user = {};
+    user['username'] = fromData.get('UsernameName');
+    user['password'] = fromData.get('PasswordName');
+
+    fetch(`${URL}/login`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem("JWT")
+        },
+
+        body: JSON.stringify(user)
+    }).then((result) => {
+        if (result.ok) {
+            localStorage.setItem("JWT", result.headers.get("Authorization"));
+            window.location.href = "http://localhost:8081/";
+        }
+        result.json().then((user) => {
+            entries.push(user);
+        });
+    });
+
+};
+
+const signupUser = (e) => {
+    e.preventDefault();
+    const fromData= new FormData(e.target);
+    const user = {};
+    user['username'] = fromData.get('UsernameName');
+    user['password'] = fromData.get('PasswordName');
+
+    fetch(`${URL}/users/sign-up`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(user)
+    }).then((result) => {
+        result.json().then((user) => {
+            entries.push(user);
+        });
+    });
+};
+
+const generateTestdata = () => {
+    const category = {};
+    category['name'] = "Produktiv"
+    fetch(`${URL}/categories`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            //Authorization: localStorage.getItem("JWT")
+        },
+        body: JSON.stringify(category)
+    })
+    const category2 = {};
+    category2['name'] = "Buchhaltung"
+    fetch(`${URL}/categories`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            //Authorization: localStorage.getItem("JWT")
+        },
+        body: JSON.stringify(category2)
+    })
+    const entry = {};
+    entry['checkIn'] = "2020-11-04 T 20:12:00"
+    entry['checkOut'] = "2020-11-04 T 20:12:00"
+    entry['category'] = { id: 2};
+
+    fetch(`${URL}/entries`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            //Authorization: localStorage.getItem("JWT")
+        },
+        body: JSON.stringify(entry)
+    })
+    const entry2 = {};
+    entry['checkIn'] = "2020-11-04 T 20:12:00"
+    entry['checkOut'] = "2020-11-04 T 20:12:00"
+    entry['category'] = { id: 1};
+
+    fetch(`${URL}/entries`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            //Authorization: localStorage.getItem("JWT")
+        },
+        body: JSON.stringify(entry)
+    })
+    indexEntries();
+    indexCategories();
+};

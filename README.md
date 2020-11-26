@@ -1,5 +1,16 @@
 # M223: Punchclock
-Dies ist eine Beispielapplikation für das Modul M223.
+Diese Applikation verfügt über die Optionen Zeiteinträge mit einer Kategorie zu speichern. Ich habe auch versucht ein Login zu erstellen. 
+Diese findet man unter `http://localhost:8081/login.html`. 
+Die generiert ein JWT, der auch im LocalStorage gespeichert wird. Auch kann man ein neuen Benutzer erstellen kann.
+
+#### Datensript
+
+Eine Scipt wirde erstellt, wenn man au den Button im index drückt um ein paar Userdaten erstellen kann.
+
+#### Funktionen
+
+Man kann Einträge/Kategorien erstellen, anzeigen und löschen. 
+Wenn man eine Kategorie hinzufügt, kann man danach auch einen Eintrag mit dieser Kategorie erstellen.
 
 ## Loslegen
 Folgende Schritte befolgen um loszulegen:
