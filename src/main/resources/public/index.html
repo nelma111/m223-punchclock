@@ -17,6 +17,8 @@
             <label for="checkOut">Check out</label>
             <input type="date" name="checkOutDate" id="checkOut" required>
             <input type="time" name="checkOutTime" required>
+            <label for="category">Category</label>
+            <select name="categoryName" id="category"/>
             <input type="submit" value="Save" />
         </form>
         <table>
@@ -25,12 +27,35 @@
                     <th>ID</th>
                     <th>Check in</th>
                     <th>Check out</th>
+                    <th>Category</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody id="entryDisplay">
                 <tr>
                     <td colspan="3">Loading...</td>
                 </tr>
+            </tbody>
+        </table>
+        <br>
+        <br>
+        <form id="createCategoryForm">
+            <label for="CategoryName">Category</label>
+            <input type="text" name="Category" id="CategoryName" required>
+            <input type="submit" value="Save" />
+        </form>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody id="categoryDisplay">
+            <tr>
+                <td colspan="3">Loading...</td>
+            </tr>
             </tbody>
         </table>
     </body>

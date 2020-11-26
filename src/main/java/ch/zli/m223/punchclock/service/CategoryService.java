@@ -28,7 +28,7 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
-    public void delete(Long id) {
+    public void deleteCategory(Long id) {
         this.categoryRepository.deleteById(id);
     }
 

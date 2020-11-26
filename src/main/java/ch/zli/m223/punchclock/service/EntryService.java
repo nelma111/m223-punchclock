@@ -22,7 +22,7 @@ public class EntryService {
         return entryRepository.findAll();
     }
 
-    public void deleteEntry(long id){
+    public void deleteCategory(long id){
         entryRepository.deleteById(id);
     }
 }

@@ -33,13 +33,11 @@ public class CategoryController {
     }
 
     @DeleteMapping("{id}")
-    public void delete(@PathVariable Long id) throws ResponseStatusException {
-        try {
-            categoryService.delete(id);
-        } catch (DataIntegrityViolationException ex) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, ex.getLocalizedMessage());
-        }
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteCategory(@PathVariable long id){
+        categoryService.deleteCategory(id);
     }
+
     @PutMapping()
     public Category update(@Valid @RequestBody Category category) {
         return  categoryService.update(category);
